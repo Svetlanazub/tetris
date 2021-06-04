@@ -8,6 +8,8 @@ import com.epam.prejap.tetris.game.Waiter;
 import com.epam.prejap.tetris.player.Player;
 import com.epam.prejap.tetris.player.RandomPlayer;
 
+import java.io.IOException;
+
 class Tetris {
 
     private final Playfield playfield;
@@ -41,7 +43,7 @@ class Tetris {
         return new Score(score);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int rows = 10;
         int cols = 20;
         int delay = 500;
@@ -52,8 +54,10 @@ class Tetris {
         var game = new Tetris(playfield, new Waiter(delay), new RandomPlayer());
 
         var score = game.play();
-
+        SavedScore savedScore = new SavedScore();
+        System.out.println(savedScore.toString());
         System.out.println("Score: " + score.points());
+        savedScore.rewriteSavedScore(score.points(), savedScore.nameForNewScore());
     }
 
 }
