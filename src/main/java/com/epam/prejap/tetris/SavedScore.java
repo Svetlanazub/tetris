@@ -1,49 +1,64 @@
 package com.epam.prejap.tetris;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 /**
+ * Keeps players scores in JSON file and print
+ * 25 maximum score in order from the highest to lowest
+ *
  * @author Svetlana_Zubkova
  */
-public class SavedScore {
-    ArrayList<Record> scoresList;
-    final static int n = 25;
+class SavedScore {
+    private List<Record> scoresList;
+    private final static int n = 25;
+    private String path;
 
-    public SavedScore() throws IOException {
+    SavedScore(String filePath) {
+        path = filePath;
         scoresList = new ArrayList<>();
-        try {
-            FileReader reader = new FileReader("data/saved_result.txt");
-            Scanner input = new Scanner(reader);
-            while (input.hasNextLine()) {
-                String[] record = input.nextLine().split(" ");
-                String name = record[0];
-                int valueOfScore = Integer.parseInt(record[1]);
-                Record record1 = new Record(name, valueOfScore);
-                scoresList.add(record1);
-            }
-            reader.close();
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            scoresList = new Gson().fromJson(reader, new TypeToken<List<Record>>() {
+            }.getType());
             Collections.sort(scoresList);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("File doesn't exist!");
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
-
     }
 
-    void rewriteSavedScore(int currentPoints, String nameNewScore) throws IOException {
-        FileWriter writer = new FileWriter("data/saved_result.txt");
-        scoresList.add(new Record(nameNewScore, currentPoints));
-        writer.write(this.toString());
-        writer.close();
+    /**
+     * Writes a new score to the JSON file if it is in the range of 25 max scores.
+     *
+     * @param currentPoints score received in the current game
+     * @param nameNewScore  name of current player
+     */
+    void rewriteSavedScore(int currentPoints, String nameNewScore) {
+        try (Writer writer = Files.newBufferedWriter(Paths.get(path))) {
+            Gson gson = new Gson();
+            scoresList.add(new Record(nameNewScore, currentPoints));
+            Collections.sort(scoresList);
+            gson.toJson(scoresList, writer);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
+    /**
+     * Generates name of current player that consists of 3 characters
+     *
+     * @return String
+     */
     String nameForNewScore() {
         final String alphabet = "ABCDEFGHIJKLMNOPRQSTUXYZ";
         int n = alphabet.length();
@@ -55,6 +70,11 @@ public class SavedScore {
         return input.toString();
     }
 
+    /**
+     * Prints 25 highest score with players' names
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
@@ -64,20 +84,23 @@ public class SavedScore {
         return output.toString();
     }
 
-    class Record implements Comparable<Record> {
-        String name;
-        Integer valueOfScore;
+    /**
+     * Creates record with player's names and scores
+     */
+    private static class Record implements Comparable<Record> {
+        private final String name;
+        private final Integer valueOfScore;
 
-        public Record(String name, Integer valueOfScore) {
+        private Record(String name, Integer valueOfScore) {
             this.name = name;
             this.valueOfScore = valueOfScore;
         }
 
-        public Integer getValueOfScore() {
+        private Integer getValueOfScore() {
             return valueOfScore;
         }
 
-        public String getName() {
+        private String getName() {
             return name;
         }
 
