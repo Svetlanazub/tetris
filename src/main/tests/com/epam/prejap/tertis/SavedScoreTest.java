@@ -7,15 +7,18 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import java.io.IOException;
-
 /**
- * @author Svetlana_Zubkova
- * 1. Write new line to the file
- * 2. Generate 3 chars
- * 3. toString print 25 lines
- * 4. Check sorting from max to min
+ *  These tests check:
+ *  <p><ul>
+ *  <li>1. Writing a new line to the file
+ *  <li>2. Generating 3 chars
+ *  <li>3. toString method for printing 25 lines
+ *  <li>4. sorting scores from max to min
+ *  </ul><p>
+ *  @author Svetlana_Zubkova
  */
+
+
 public class SavedScoreTest {
 
     private SavedScore savedScore;
@@ -25,6 +28,9 @@ public class SavedScoreTest {
         savedScore = new SavedScore();
     }
 
+    /**
+     * This method tests if the line with player's name and score is added to the .txt file
+     */
     @Test
     public void shouldAddStringToFile() {
         String name = "AAA";
@@ -36,12 +42,17 @@ public class SavedScoreTest {
         Assert.assertEquals(test.contains("AAA 45"), true);
     }
 
+    /**
+     * This method tests number of characters in generated name
+     */
     @Test
     public void shouldGenerateThreeCharsName() {
         String testName = savedScore.nameForNewScore();
         Assert.assertEquals(testName.length(), 3);
     }
-
+    /**
+     * This method tests printing only 25 lines from .txt file
+     */
     @Test
     public void shouldPrint25Lines() {
         String[] sizeOfPrinting = savedScore.toString().split("/n");
@@ -49,6 +60,9 @@ public class SavedScoreTest {
             Assert.assertFalse(true);
         }
     }
+    /**
+     * This method tests sorting from highest to lowest score
+     */
     @Test
     public void shouldSortFromMaxScore() {
         savedScore.rewriteSavedScore(9900, "AAA");
