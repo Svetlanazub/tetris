@@ -34,8 +34,8 @@ public class Playfield {
         hide();
         boolean moved;
             switch (move) {
-                case LEFT -> moveLeft();
-                case RIGHT -> moveRight();
+      //          case LEFT -> moveLeft();
+      //          case RIGHT -> moveRight();
             }
             moved = moveDown();
         show();
