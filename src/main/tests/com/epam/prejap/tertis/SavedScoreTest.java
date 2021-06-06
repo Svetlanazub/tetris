@@ -29,7 +29,7 @@ public class SavedScoreTest {
     }
 
     /**
-     * This method tests if the line with player's name and score is added to the .txt file
+     * This method tests if the line with player's name and score is added to the JSON file
      */
     @Test
     public void shouldAddStringToFile() {
@@ -51,7 +51,7 @@ public class SavedScoreTest {
         Assert.assertEquals(testName.length(), 3);
     }
     /**
-     * This method tests printing only 25 lines from .txt file
+     * This method tests printing only 25 lines from JSON file
      */
     @Test
     public void shouldPrint25Lines() {
