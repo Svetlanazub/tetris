@@ -9,7 +9,7 @@
         </run>
     </groups>
     <classes>
-        <class name="com.epam.prejap.tetris.SavedScoreTests"></class>
+        <class name="com.epam.prejap.tetris.SavedScoreTest"></class>
     </classes>
     </test>
 </suite>
