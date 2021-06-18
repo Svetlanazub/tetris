@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.game;
 
+import org.tinylog.Logger;
+
 import java.io.PrintStream;
 
 public class Printer {
@@ -8,10 +10,12 @@ public class Printer {
 
     public Printer(PrintStream out) {
         this.out = out;
+        Logger.trace("New {} is created", getClass().getSimpleName());
     }
 
     void draw(Grid grid) {
         clear();
+        Logger.trace("Drawing the grid");
         border(grid.columnsNumber);
         for (Grid.Row line : grid.getLines()) {
             startRow();
@@ -22,6 +26,7 @@ public class Printer {
     }
 
     void clear() {
+        Logger.trace("Clearing the old grid");
         out.print("\u001b[2J\u001b[H");
     }
 

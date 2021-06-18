@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 /**
  * Generates a "T" block in the Tetris game - when "1" in a byte array is present then a "#" is printed,
  * otherwise a whitespace (" ") is printed.
@@ -23,6 +25,7 @@ final class TBlock extends Block {
 
     TBlock() {
         super(IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 }
 

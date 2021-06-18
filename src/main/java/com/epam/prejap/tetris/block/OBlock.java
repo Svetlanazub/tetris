@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 final class OBlock extends Block {
 
     /**
@@ -17,6 +19,7 @@ final class OBlock extends Block {
 
     public OBlock() {
         super(IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 
 }

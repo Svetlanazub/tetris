@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -17,6 +19,7 @@ public class BlockFeed {
     );
 
     public BlockFeed() {
+        Logger.trace("New {} is created", getClass().getSimpleName());
     }
 
     public Block nextBlock() {

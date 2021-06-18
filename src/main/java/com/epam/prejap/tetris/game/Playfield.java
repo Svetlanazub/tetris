@@ -2,6 +2,7 @@ package com.epam.prejap.tetris.game;
 
 import com.epam.prejap.tetris.block.Block;
 import com.epam.prejap.tetris.block.BlockFeed;
+import org.tinylog.Logger;
 
 
 public class Playfield {
@@ -22,12 +23,16 @@ public class Playfield {
         this.feed = feed;
         this.printer = printer;
         grid = new Grid(this.rows, this.cols);
+        Logger.trace("New {} is created with {} rows and {} columns", getClass().getSimpleName(), rows, cols);
     }
 
     public void nextBlock() {
+        Logger.trace("Next block is called");
         block = feed.nextBlock();
+        Logger.trace("Next block is: {}", block.getClass().getSimpleName());
         row = 0;
         col = (cols - block.cols()) / 2;
+        Logger.trace("Calling to draw the grid with a new block");
         show();
     }
 
@@ -41,6 +46,7 @@ public class Playfield {
         }
         moved = moveDown();
         show();
+        Logger.trace("Showing the grid");
         return moved;
     }
 
@@ -68,6 +74,7 @@ public class Playfield {
      * Moves a current block right by 1 column.
      */
     private void moveRight() {
+        Logger.trace("Trying to move the block to the right");
         move(0, 1);
     }
 
@@ -75,6 +82,7 @@ public class Playfield {
      * Moves a current block left by 1 column.
      */
     private void moveLeft() {
+        Logger.trace("Trying to move the block to the left");
         move(0, -1);
     }
 
@@ -84,6 +92,7 @@ public class Playfield {
      * @return true if such move was made
      */
     private boolean moveDown() {
+        Logger.trace("Trying to move the block down");
         return move(1, 0);
     }
 
@@ -98,6 +107,7 @@ public class Playfield {
     private boolean move(int rowOffset, int colOffset) {
         boolean moved = false;
         if (isValidMove(block, rowOffset, colOffset)) {
+            Logger.trace("The block was moved: {}", !moved);
             doMove(rowOffset, colOffset);
             moved = true;
         }
@@ -132,6 +142,7 @@ public class Playfield {
      * Hides a current block.
      */
     private void hide() {
+        Logger.trace("Hiding the grid");
         forEachBrick((i, j, dot) -> grid.replaceValue(row + i, col + j, 0));
     }
 
