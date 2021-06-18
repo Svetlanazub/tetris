@@ -64,7 +64,8 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>${mainClass}</mainClass>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>${main.class}</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
