@@ -11,7 +11,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <mainClass>com.epam.prejap.tetris.Tetris</mainClass>
         <main.class>com.epam.prejap.tetris.Tetris</main.class>
         <test.jar.file.location>
             ${project.build.directory}${file.separator}${project.build.finalName}.jar
