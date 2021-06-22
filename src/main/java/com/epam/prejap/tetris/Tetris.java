@@ -8,7 +8,6 @@ import com.epam.prejap.tetris.game.Waiter;
 import com.epam.prejap.tetris.player.Player;
 import com.epam.prejap.tetris.player.RandomPlayer;
 
-import java.io.IOException;
 
 class Tetris {
 
@@ -59,5 +58,4 @@ class Tetris {
         System.out.println("Score: " + score.points());
         savedScore.rewriteSavedScore(score.points(), savedScore.nameForNewScore());
     }
-
 }
