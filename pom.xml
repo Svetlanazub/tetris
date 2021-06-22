@@ -26,7 +26,6 @@
         <jnativehook.version>2.0.2</jnativehook.version>
         <testng.version>7.4.0</testng.version>
         <maven.assembly.plugin.version>3.3.0</maven.assembly.plugin.version>
-
     </properties>
 
     <dependencies>
@@ -51,7 +50,6 @@
     </dependencies>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
