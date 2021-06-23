@@ -86,3 +86,16 @@ License may be changed in a future by any valid reason.
 
 Current used logging library is Tinylog.
 To get all the relevant information on logging please see [this file](logging.md).
+
+## Dependencies
+
+
+Depends on [Tinylog](https://tinylog.org/v2/) for logging purposes.
+This dependency might change in the future, as some requirements to logging are not yet met.
+In particular:
+- The time is not logged;
+
+Apart from that a side effect appears:
+- Upon every run, the logger creates a new file,
+  even when there is nothing to log according to the selected logging level.
+
