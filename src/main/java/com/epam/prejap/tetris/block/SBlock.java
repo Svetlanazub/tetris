@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 /**
  * @author Nikita Pochapynskyi
  */
@@ -20,5 +22,6 @@ final class SBlock extends Block {
 
     SBlock() {
         super(S_IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 }

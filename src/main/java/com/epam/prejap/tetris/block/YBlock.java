@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 /**
  * Represents Y block in BlockFeed.
  *
@@ -24,5 +26,6 @@ final class YBlock extends Block {
 
     public YBlock() {
         super(IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 }

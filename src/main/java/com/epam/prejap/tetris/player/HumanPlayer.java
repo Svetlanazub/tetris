@@ -23,6 +23,7 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+import org.tinylog.Logger;
 
 import java.util.Optional;
 import java.util.logging.Level;
@@ -55,8 +56,9 @@ public class HumanPlayer implements Player, NativeKeyListener {
             loggerNH.setLevel(Level.OFF); // disable spam from JNativeHook
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
+            Logger.trace("New {} is created", getClass().getSimpleName());
         } catch (NativeHookException e) {
-            System.err.println("Count not register native hook!");
+            Logger.error("Count not register native hook!");
         }
     }
 
@@ -84,7 +86,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {
-            System.err.println("Could not unregister hook!");
+            Logger.error("Could not unregister hook!");
         }
     }
 
@@ -95,6 +97,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
         if (Move.of(nativeKeyEvent.getKeyChar()) != Move.NONE) {
             currentMovement = nativeKeyEvent.getKeyChar();
+            Logger.trace("The key {} was pressed", (char) currentMovement);
         }
     }
 

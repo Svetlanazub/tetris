@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 /**
  * Implements H shaped block
  * @see com.epam.prejap.tetris.game.Printer#print(byte) 
@@ -23,6 +25,7 @@ final class HBlock extends Block{
     };
     public HBlock(){
         super(IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 }
 

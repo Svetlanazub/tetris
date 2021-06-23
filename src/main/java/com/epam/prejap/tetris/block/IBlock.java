@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.block;
 
+import org.tinylog.Logger;
+
 /**
  *  It creates I block of tetris
  *
@@ -27,5 +29,6 @@ final class IBlock extends Block {
     };
     public IBlock(){
         super(IMAGE);
+        Logger.trace("{} was created", getClass().getSimpleName());
     }
 }

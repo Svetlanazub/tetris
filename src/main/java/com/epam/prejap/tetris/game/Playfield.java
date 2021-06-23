@@ -63,6 +63,7 @@ public class Playfield {
      * @see Playfield#isValidMove(Block, int, int)
      */
     private boolean moveToBottom() {
+        Logger.trace("Trying to move the block to the bottom");
         int i = 1;
         while (isValidMove(block, i, 0)) {
             i++;
