@@ -19,11 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import com.epam.prejap.tetris.game.Move;
+import com.epam.prejap.tetris.logger.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-import org.tinylog.Logger;
 
 import java.util.Optional;
 import java.util.logging.Level;

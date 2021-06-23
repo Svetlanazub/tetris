@@ -1,6 +1,6 @@
 package com.epam.prejap.tetris.game;
 
-import org.tinylog.Logger;
+import com.epam.prejap.tetris.logger.Logger;
 
 import java.util.concurrent.TimeUnit;
 

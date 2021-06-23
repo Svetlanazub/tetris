@@ -1,6 +1,6 @@
 package com.epam.prejap.tetris.block;
 
-import org.tinylog.Logger;
+import com.epam.prejap.tetris.logger.Logger;
 
 import java.util.List;
 import java.util.Random;

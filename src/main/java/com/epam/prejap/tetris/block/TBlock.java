@@ -1,6 +1,6 @@
 package com.epam.prejap.tetris.block;
 
-import org.tinylog.Logger;
+import com.epam.prejap.tetris.logger.Logger;
 
 /**
  * Generates a "T" block in the Tetris game - when "1" in a byte array is present then a "#" is printed,

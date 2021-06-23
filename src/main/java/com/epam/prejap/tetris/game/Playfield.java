@@ -2,7 +2,7 @@ package com.epam.prejap.tetris.game;
 
 import com.epam.prejap.tetris.block.Block;
 import com.epam.prejap.tetris.block.BlockFeed;
-import org.tinylog.Logger;
+import com.epam.prejap.tetris.logger.Logger;
 
 
 public class Playfield {
