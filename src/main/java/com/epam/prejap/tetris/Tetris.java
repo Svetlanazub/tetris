@@ -53,7 +53,7 @@ class Tetris {
         var game = new Tetris(playfield, new Waiter(delay), new RandomPlayer());
 
         var score = game.play();
-        SavedScore savedScore = new SavedScore("resources/score_list.json");
+        SavedScore savedScore = new SavedScore("score_list.json");
         System.out.println(savedScore.toString());
         System.out.println("Score: " + score.points());
         savedScore.rewriteSavedScore(score.points(), savedScore.nameForNewScore());
