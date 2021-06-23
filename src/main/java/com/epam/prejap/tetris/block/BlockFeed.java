@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class BlockFeed {
+    private static final Logger LOGGER = Logger.getLogger(BlockFeed.class);
 
     private final Random rnd = new Random();
     private final List<Supplier<Block>> blocks = List.of(
@@ -19,7 +20,7 @@ public class BlockFeed {
     );
 
     public BlockFeed() {
-        Logger.trace("New {} is created", getClass().getSimpleName());
+        LOGGER.trace("New {} is created", getClass().getSimpleName());
     }
 
     public Block nextBlock() {

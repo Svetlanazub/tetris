@@ -9,6 +9,7 @@ import com.epam.prejap.tetris.logger.Logger;
  * @author Grzegorz Konopka
  */
 final class TBlock extends Block {
+    private static final Logger LOGGER = Logger.getLogger(TBlock.class);
 
     /**
      * Byte array represents "Y" block.
@@ -25,7 +26,7 @@ final class TBlock extends Block {
 
     TBlock() {
         super(IMAGE);
-        Logger.trace("{} was created", getClass().getSimpleName());
+        LOGGER.trace("{} was created", getClass().getSimpleName());
     }
 }
 

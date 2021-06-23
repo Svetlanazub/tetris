@@ -37,6 +37,7 @@ import static java.util.logging.Logger.getLogger;
  * @see Player
  */
 public class HumanPlayer implements Player, NativeKeyListener {
+    private static final Logger LOGGER = Logger.getLogger(HumanPlayer.class);
 
     /**
      * @see HumanPlayer#nextMove()
@@ -56,9 +57,9 @@ public class HumanPlayer implements Player, NativeKeyListener {
             loggerNH.setLevel(Level.OFF); // disable spam from JNativeHook
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
-            Logger.trace("New {} is created", getClass().getSimpleName());
+            LOGGER.trace("New {} is created", getClass().getSimpleName());
         } catch (NativeHookException e) {
-            Logger.error("Count not register native hook!");
+            LOGGER.error("Count not register native hook!");
         }
     }
 
@@ -86,7 +87,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {
-            Logger.error("Could not unregister hook!");
+            LOGGER.error("Could not unregister hook!");
         }
     }
 
@@ -97,7 +98,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
         if (Move.of(nativeKeyEvent.getKeyChar()) != Move.NONE) {
             currentMovement = nativeKeyEvent.getKeyChar();
-            Logger.trace("The key {} was pressed", (char) currentMovement);
+            LOGGER.trace("The key {} was pressed", (char) currentMovement);
         }
     }
 

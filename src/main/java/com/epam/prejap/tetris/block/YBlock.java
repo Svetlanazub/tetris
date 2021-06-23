@@ -8,6 +8,7 @@ import com.epam.prejap.tetris.logger.Logger;
  * @author Anna Silenko
  */
 final class YBlock extends Block {
+    private static final Logger LOGGER = Logger.getLogger(YBlock.class);
 
     /**
      * Byte array represents "S" block.
@@ -26,6 +27,6 @@ final class YBlock extends Block {
 
     public YBlock() {
         super(IMAGE);
-        Logger.trace("{} was created", getClass().getSimpleName());
+        LOGGER.trace("{} was created", getClass().getSimpleName());
     }
 }

@@ -7,11 +7,11 @@ import java.util.Optional;
 import java.util.Random;
 
 public class RandomPlayer implements Player {
-
+    private static final Logger LOGGER = Logger.getLogger(RandomPlayer.class);
     private final Random random = new Random();
 
     public RandomPlayer(){
-        Logger.trace("New {} is created", getClass().getSimpleName());
+        LOGGER.trace("New {} is created", getClass().getSimpleName());
     }
 
     @Override

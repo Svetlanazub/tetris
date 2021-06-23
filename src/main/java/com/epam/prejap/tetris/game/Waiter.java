@@ -5,12 +5,12 @@ import com.epam.prejap.tetris.logger.Logger;
 import java.util.concurrent.TimeUnit;
 
 public class Waiter {
-
+    private static final Logger LOGGER = Logger.getLogger(Waiter.class);
     private final int milliseconds;
 
     public Waiter(int milliseconds) {
         this.milliseconds = milliseconds;
-        Logger.trace("New {} is created with a delay of {}ms", getClass().getSimpleName(), milliseconds);
+        LOGGER.trace("New {} is created with a delay of {}ms", getClass().getSimpleName(), milliseconds);
     }
 
     public void waitForIt() {
@@ -18,6 +18,6 @@ public class Waiter {
             TimeUnit.MILLISECONDS.sleep(milliseconds);
         } catch (InterruptedException ignore) {
         }
-        Logger.trace("Waited {} milliseconds", milliseconds);
+        LOGGER.trace("Waited {} milliseconds", milliseconds);
     }
 }
