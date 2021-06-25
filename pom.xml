@@ -6,12 +6,11 @@
 
     <groupId>com.epam.prejap</groupId>
     <artifactId>tetris</artifactId>
-    <version>0.11</version>
+    <version>0.15</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <mainClass>com.epam.prejap.tetris.Tetris</mainClass>
         <main.class>com.epam.prejap.tetris.Tetris</main.class>
         <test.jar.file.location>
             ${project.build.directory}${file.separator}${project.build.finalName}.jar
@@ -21,10 +20,13 @@
             Example: maven-jar-plugin -> maven.jar.plugin.version
             Order of appearance: alphabetical
         -->
-        <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
         <jnativehook.version>2.0.2</jnativehook.version>
-        <testng.version>7.4.0</testng.version>
         <maven.assembly.plugin.version>3.3.0</maven.assembly.plugin.version>
+        <mockito.version>3.11.2</mockito.version>
+        <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
+        <system.lambda.version>1.2.0</system.lambda.version>
+        <testng.version>7.4.0</testng.version>
+        <tinylog.version>2.3.2</tinylog.version>
     </properties>
 
     <dependencies>
@@ -32,6 +34,12 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-lambda</artifactId>
+            <version>${system.lambda.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.1stleg/jnativehook -->
@@ -45,6 +53,10 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.7</version>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>${tinylog.version}</version>
         </dependency>
     </dependencies>
 
@@ -64,7 +76,8 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>${mainClass}</mainClass>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>${main.class}</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

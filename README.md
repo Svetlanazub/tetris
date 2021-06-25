@@ -76,8 +76,26 @@ NOT HERE, NOT IN YOUR LOCAL REPOSITORY.
 1. Every new, passing and meaningful test is worth 1 point.
 1. Every added and meaningful Javadoc is worth 1 point.
 
-
 ## License
+
 Project is distributed under GNU Lesser General Public license.
 Current GNU-licensed dependency is JNativeHook.
 License may be changed in a future by any valid reason.
+
+## Logging
+
+Current used logging library is Tinylog.
+To get all the relevant information on logging please see [this file](logging.md).
+
+## Dependencies
+
+
+Depends on [Tinylog](https://tinylog.org/v2/) for logging purposes.
+This dependency might change in the future, as some requirements to logging are not yet met.
+In particular:
+- The time is not logged;
+
+Apart from that a side effect appears:
+- Upon every run, the logger creates a new file,
+  even when there is nothing to log according to the selected logging level.
+

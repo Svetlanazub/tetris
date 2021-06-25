@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import com.epam.prejap.tetris.game.Move;
+import com.epam.prejap.tetris.logger.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -36,6 +37,7 @@ import static java.util.logging.Logger.getLogger;
  * @see Player
  */
 public class HumanPlayer implements Player, NativeKeyListener {
+    private static final Logger LOGGER = Logger.getLogger(HumanPlayer.class);
 
     /**
      * @see HumanPlayer#nextMove()
@@ -55,8 +57,9 @@ public class HumanPlayer implements Player, NativeKeyListener {
             loggerNH.setLevel(Level.OFF); // disable spam from JNativeHook
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
+            LOGGER.trace("New {} object is created", getClass().getSimpleName());
         } catch (NativeHookException e) {
-            System.err.println("Count not register native hook!");
+            LOGGER.error("Could not register native hook!");
         }
     }
 
@@ -84,7 +87,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {
-            System.err.println("Could not unregister hook!");
+            LOGGER.error("Could not unregister hook!");
         }
     }
 
@@ -95,6 +98,7 @@ public class HumanPlayer implements Player, NativeKeyListener {
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
         if (Move.of(nativeKeyEvent.getKeyChar()) != Move.NONE) {
             currentMovement = nativeKeyEvent.getKeyChar();
+            LOGGER.trace("The key {} was pressed", (char) currentMovement);
         }
     }
 

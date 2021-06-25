@@ -1,9 +1,12 @@
 package com.epam.prejap.tetris.block;
 
+import com.epam.prejap.tetris.logger.Logger;
+
 /**
  * @author Nikita Pochapynskyi
  */
 final class SBlock extends Block {
+    private static final Logger LOGGER = Logger.getLogger(SBlock.class);
 
     /**
      * Byte array represents "S" block.
@@ -20,5 +23,6 @@ final class SBlock extends Block {
 
     SBlock() {
         super(S_IMAGE);
+        LOGGER.trace("{} was created", getClass().getSimpleName());
     }
 }

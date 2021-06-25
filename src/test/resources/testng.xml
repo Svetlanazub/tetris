@@ -11,8 +11,20 @@
             </run>
         </groups>
         <classes>
-            <class name="com.epam.prejap.tetris.block.BlockShapeTest"/>
+            <class name="com.epam.prejap.tetris.block.BlocksShapesTest"/>
         </classes>
+    </test>
+    <test verbose="2" name="Remove filled lines tests">
+        <groups>
+            <run>
+                <include name="gridTests"/>
+                <include name="playfieldClassTests"/>
+            </run>
+        </groups>
+    <classes>
+        <class name="com.epam.prejap.tetris.game.GridTest"/>
+        <class name="com.epam.prejap.tetris.game.PlayfieldTest"/>
+    </classes>
     </test>
     <test verbose="2" name="jar tests">
         <groups>
