@@ -1,1 +1,30 @@
-[{"name":"AAA","valueOfScore":25000},{"name":"AAA","valueOfScore":25000},{"name":"AAA","valueOfScore":25000},{"name":"AAA","valueOfScore":25000},{"name":"EKU","valueOfScore":25000},{"name":"LGE","valueOfScore":25000},{"name":"BBB","valueOfScore":10000},{"name":"BBB","valueOfScore":10000},{"name":"BBB","valueOfScore":10000},{"name":"BBB","valueOfScore":10000},{"name":"BBB","valueOfScore":10000},{"name":"AAA","valueOfScore":9900},{"name":"AAA","valueOfScore":9900},{"name":"AAA","valueOfScore":9900},{"name":"NXV","valueOfScore":89},{"name":"KMA","valueOfScore":78},{"name":"ZUS","valueOfScore":56},{"name":"AAA","valueOfScore":45},{"name":"SOF","valueOfScore":5},{"name":"GCH","valueOfScore":5},{"name":"ACD","valueOfScore":2}]
+[
+  {
+    "name": "NXV",
+    "valueOfScore": 89
+  },
+  {
+    "name": "KMA",
+    "valueOfScore": 78
+  },
+  {
+    "name": "ZUS",
+    "valueOfScore": 56
+  },
+  {
+    "name": "AAA",
+    "valueOfScore": 45
+  },
+  {
+    "name": "SOF",
+    "valueOfScore": 5
+  },
+  {
+    "name": "GCH",
+    "valueOfScore": 5
+  },
+  {
+    "name": "ACD",
+    "valueOfScore": 2
+  }
+]

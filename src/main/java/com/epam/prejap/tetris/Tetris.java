@@ -62,15 +62,10 @@ class Tetris {
         var playfield = new Playfield(rows, cols, feed, printer);
         var game = new Tetris(playfield, new Waiter(delay), player);
 
-        /* todo: try to save score = game.play() to SavedScore class first, insert it to
-         * score list, then call utility class to save it to file. In this way feature would be a way more
-         * easier to test
-         */
         var score = game.play();
         SavedScore savedScore = new SavedScore("score_list.json");
-        System.out.println(savedScore);
+        System.out.println(savedScore.toString());
         System.out.println("Score: " + score.points());
-
         savedScore.writeSavedScore(score.points());
     }
 }
