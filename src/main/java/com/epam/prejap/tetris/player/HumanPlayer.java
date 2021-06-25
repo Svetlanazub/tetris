@@ -57,9 +57,9 @@ public class HumanPlayer implements Player, NativeKeyListener {
             loggerNH.setLevel(Level.OFF); // disable spam from JNativeHook
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
-            LOGGER.trace("New {} is created", getClass().getSimpleName());
+            LOGGER.trace("New {} object is created", getClass().getSimpleName());
         } catch (NativeHookException e) {
-            LOGGER.error("Count not register native hook!");
+            LOGGER.error("Could not register native hook!");
         }
     }
 

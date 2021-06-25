@@ -11,7 +11,7 @@ public class RandomPlayer implements Player {
     private final Random random = new Random();
 
     public RandomPlayer(){
-        LOGGER.trace("New {} is created", getClass().getSimpleName());
+        LOGGER.trace("New {} object is created", getClass().getSimpleName());
     }
 
     @Override

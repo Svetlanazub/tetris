@@ -11,7 +11,7 @@ public class Printer {
 
     public Printer(PrintStream out) {
         this.out = out;
-        LOGGER.trace("New {} is created", getClass().getSimpleName());
+        LOGGER.trace("New {} object is created", getClass().getSimpleName());
     }
 
     void draw(Grid grid) {

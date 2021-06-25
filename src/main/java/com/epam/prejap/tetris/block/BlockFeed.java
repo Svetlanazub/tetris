@@ -20,7 +20,7 @@ public class BlockFeed {
     );
 
     public BlockFeed() {
-        LOGGER.trace("New {} is created", getClass().getSimpleName());
+        LOGGER.trace("New {} object is created", getClass().getSimpleName());
     }
 
     public Block nextBlock() {

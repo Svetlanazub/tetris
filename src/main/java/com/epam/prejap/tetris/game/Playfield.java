@@ -24,7 +24,7 @@ public class Playfield {
         this.feed = feed;
         this.printer = printer;
         grid = new Grid(this.rows, this.cols);
-        LOGGER.trace("New {} is created with {} rows and {} columns", getClass().getSimpleName(), rows, cols);
+        LOGGER.trace("New {} object is created with {} rows and {} columns", getClass().getSimpleName(), rows, cols);
     }
 
     public void nextBlock() {
@@ -56,7 +56,10 @@ public class Playfield {
      * Lines that are above it, will be moved down on such number of rows however many filled lines were found.
      */
     public void findAndRemoveFilledLines() {
-        if (grid.hasFilledLines()) grid.removeFilledLine();
+        if (grid.hasFilledLines()) {
+            LOGGER.debug("Removing filled lines");
+            grid.removeFilledLine();
+        }
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.epam.prejap.tetris.game;
 
+import com.epam.prejap.tetris.logger.Logger;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,7 @@ import static java.util.Arrays.asList;
  * @author Miatowicz Natalia
  */
 class Grid {
+    private static final Logger LOGGER = Logger.getLogger(Grid.class);
     private final List<Row> lines;
     final int rowsNumber;
     final int columnsNumber;
@@ -22,6 +25,7 @@ class Grid {
         this.columnsNumber = columns;
         this.lines = new ArrayList<>(this.rowsNumber);
         for (int i = 0; i < rowsNumber; i++) addNewLineFilledWithZeros(i);
+        LOGGER.trace("New {} object is created", getClass().getSimpleName());
     }
 
     /**

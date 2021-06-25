@@ -1,11 +1,14 @@
 package com.epam.prejap.tetris;
 
+import com.epam.prejap.tetris.logger.Logger;
+
 /**
  * Takes CLI parameters and transforms them into expected values
  *
  * @author Nikita Pochapynskyi
  */
 public class Parameters {
+    private static final Logger LOGGER = Logger.getLogger(Parameters.class);
 
     /**
      * Enum of input parameters that are used in program
@@ -14,6 +17,8 @@ public class Parameters {
         ROWS(20, 10, 100),
         COLS(30, 10, 100),
         DELAY(500, 200, 2000);
+
+        private static final Logger LOGGER_ARGS = Logger.getLogger(Args.class);
 
         private final int defaultValue;
         private final int minValue;
@@ -49,6 +54,8 @@ public class Parameters {
                 value = Math.min(value, maxValue);
                 actualValue = value;
             } catch (NumberFormatException ignored) {
+                LOGGER_ARGS.warn("The provided argument {} cannot be parsed and will be replaced by default value {}",
+                        cliValue, defaultValue);
                 actualValue = defaultValue;
             }
         }
@@ -62,8 +69,10 @@ public class Parameters {
      * @param args CLI arguments
      */
     public Parameters(String[] args) {
+        LOGGER.info("Starting to parse arguments");
         setArgs(args);
         informUser();
+        LOGGER.trace("New {} object is created", getClass().getSimpleName());
     }
 
     /**
@@ -72,6 +81,7 @@ public class Parameters {
     private void informUser() {
         var pattern = "The game will start with %d rows and %d columns and a delay of %d milliseconds" + System.lineSeparator();
         System.out.format(pattern, Args.ROWS.value(), Args.COLS.value(), Args.DELAY.value());
+        LOGGER.info("The user was informed about starting parameters");
     }
 
     /**
@@ -83,8 +93,10 @@ public class Parameters {
         for (Args arg : Args.values()) {
             if ((arg.ordinal() + 1) <= args.length) {
                 arg.setArg(args[arg.ordinal()]);
+                LOGGER.debug("Setting the argument {}", arg.name());
             }
         }
+        LOGGER.info("Finished parsing arguments");
     }
 
     /**
