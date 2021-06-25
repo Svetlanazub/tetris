@@ -6,10 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 /**
@@ -19,55 +16,24 @@ import java.util.Random;
  * @author Svetlana_Zubkova
  */
 class SavedScore {
-    private List<Record> scoresList;
-    private final static int n = 25;
-    private String path;
+    private final static int MAX_AMOUNT_OF_ENTRIES = 25;
+    private final String path;
 
+    // should not be final, you should be able to update it!
+    // but if you are not going to update it at all, keep it final
+    private final List<ScoreRecord> scoresList;
     SavedScore(String filePath) {
         path = filePath;
-        scoresList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            scoresList = new Gson().fromJson(reader, new TypeToken<List<Record>>() {
-            }.getType());
-            Collections.sort(scoresList);
-        } catch (FileNotFoundException e) {
-            System.err.println("File doesn't exist!");
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        scoresList = SavedScoreIOUtility.readSavedScore(filePath);
     }
 
     /**
      * Writes a new score to the JSON file if it is in the range of 25 max scores.
      *
      * @param currentPoints score received in the current game
-     * @param nameNewScore  name of current player
      */
-    void rewriteSavedScore(int currentPoints, String nameNewScore) {
-        try (Writer writer = Files.newBufferedWriter(Paths.get(path))) {
-            Gson gson = new Gson();
-            scoresList.add(new Record(nameNewScore, currentPoints));
-            Collections.sort(scoresList);
-            gson.toJson(scoresList, writer);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Generates name of current player that consists of 3 characters
-     *
-     * @return String
-     */
-    String nameForNewScore() {
-        final String alphabet = "ABCDEFGHIJKLMNOPRQSTUXYZ";
-        int n = alphabet.length();
-        Random r = new Random();
-        StringBuilder input = new StringBuilder();
-        for (int i = 0; i <= 2; i++) {
-            input.append(alphabet.charAt(r.nextInt(n)));
-        }
-        return input.toString();
+    void writeSavedScore(int currentPoints) {
+        SavedScoreIOUtility.writeSavedScoreToFile(path, scoresList, currentPoints);
     }
 
     /**
@@ -78,8 +44,8 @@ class SavedScore {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < n && i < scoresList.size(); i++) {
-            output.append(scoresList.get(i).getName()).append(" ").append(scoresList.get(i).getValueOfScore()).append("\n");
+        for (int i = 0; i < MAX_AMOUNT_OF_ENTRIES && i < scoresList.size(); i++) {
+            output.append(scoresList.get(i).name()).append(" ").append(scoresList.get(i).valueOfScore()).append("\n");
         }
         return output.toString();
     }
@@ -87,26 +53,60 @@ class SavedScore {
     /**
      * Creates record with player's names and scores
      */
-    private static class Record implements Comparable<Record> {
-        private final String name;
-        private final Integer valueOfScore;
-
-        private Record(String name, Integer valueOfScore) {
-            this.name = name;
-            this.valueOfScore = valueOfScore;
-        }
-
-        private Integer getValueOfScore() {
-            return valueOfScore;
-        }
-
-        private String getName() {
-            return name;
-        }
-
+    record ScoreRecord(String name, Integer valueOfScore) implements Comparable<ScoreRecord> {
         @Override
-        public int compareTo(Record r) {
-            return r.getValueOfScore().compareTo(this.getValueOfScore());
+        public int compareTo(ScoreRecord r) {
+            return r.valueOfScore().compareTo(this.valueOfScore());
         }
     }
+}
+
+
+class SavedScoreIOUtility {
+    /**
+     * Read score from JSON file
+     *
+     * @param name path to file
+     * @return list of (strings) entries
+     */
+    public static List<SavedScore.ScoreRecord> readSavedScore(String name) {
+        var results = new ArrayList<SavedScore.ScoreRecord>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(name))) {
+            results = new Gson().fromJson(reader, new TypeToken<List<SavedScore.ScoreRecord>>() {
+            }.getType());
+            results.sort(Comparator.comparing(SavedScore.ScoreRecord::valueOfScore));
+        } catch (FileNotFoundException e) {
+            System.err.println("File doesn't exist!");
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return results;
+    }
+
+    public static String generateName() {
+        final String alphabet = "ABCDEFGHIJKLMNOPRQSTUXYZ";
+        int n = alphabet.length();
+        Random r = new Random();
+        StringBuilder input = new StringBuilder();
+        for (int i = 0; i <= 2; i++) {
+            input.append(alphabet.charAt(r.nextInt(n)));
+        }
+        return input.toString();
+    }
+
+    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score) {
+        try (Writer writer = Files.newBufferedWriter(Paths.get(path))) {
+            Gson gson = new Gson();
+
+            scoreList.add(new SavedScore.ScoreRecord(generateName(), score));
+
+            Collections.sort(scoreList);
+            gson.toJson(scoreList, writer);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
 }
