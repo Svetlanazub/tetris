@@ -16,33 +16,33 @@ import static org.testng.Assert.assertTrue;
  *  </ul><p>
  *  @author Svetlana_Zubkova
  */
+
+@Test (groups =  {"SavedScoreTests"})
 public class SavedScoreTest {
 
     private SavedScore savedScore;
+    private String filePath;
 
-    @BeforeSuite (groups = {"SavedScoreTests"})
+    @BeforeClass
     public void setUp() {
-        savedScore = new SavedScore("resources/test_score_list.json");
+        filePath = "resources/test_score_list.json";
+        savedScore = new SavedScore(filePath);
     }
 
-    @Test (groups = {"SavedScoreTests"})
     public void shouldAddStringToFile() {
         String name = "AAA";
         int score = 25000;
         savedScore.writeSavedScore(score);
-        savedScore = null;
-        savedScore = new SavedScore("resources/test_score_list.json");
+        savedScore = new SavedScore(filePath);
         String test = savedScore.toString();
         assertTrue(test.contains("AAA 25000"));
     }
 
-    @Test (groups = {"SavedScoreTests"})
     public void shouldGenerateThreeCharsName() {
         String testName = SavedScoreIOUtility.generateName();
         assertEquals(testName.length(), 3);
     }
 
-    @Test (groups = {"SavedScoreTests"})
     public void shouldPrint25Lines() {
         String[] sizeOfPrinting = savedScore.toString().split("/n");
         if (sizeOfPrinting.length > 25) {
@@ -50,20 +50,14 @@ public class SavedScoreTest {
         }
     }
 
-    @Test (groups = {"SavedScoreTests"})
     public void shouldSortFromMaxScore() {
         savedScore.writeSavedScore(9900, "AAA");
         savedScore.writeSavedScore(10000, "BBB");
-        savedScore = null;
-        savedScore = new SavedScore("resources/test_score_list.json");
+        savedScore = new SavedScore(filePath);
         String test = savedScore.toString();
         if (test.startsWith("BBB 10000")) {
             Assert.assertTrue(true);
         }
-    }
-
-    @AfterSuite (groups = {"SavedScoreTests"})
-    void tearDown() throws Exception {
-        savedScore = null;
+        Assert.fail();
     }
 }

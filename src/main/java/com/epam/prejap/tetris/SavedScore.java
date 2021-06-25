@@ -17,11 +17,11 @@ import java.util.*;
  */
 class SavedScore {
     private final static int MAX_AMOUNT_OF_ENTRIES = 25;
-    private final String path;
+    private String path;
 
     // should not be final, you should be able to update it!
     // but if you are not going to update it at all, keep it final
-    private final List<ScoreRecord> scoresList;
+    private List<ScoreRecord> scoresList;
 
     SavedScore(String filePath) {
         path = filePath;
@@ -50,22 +50,37 @@ class SavedScore {
     public String toString() {
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < MAX_AMOUNT_OF_ENTRIES && i < scoresList.size(); i++) {
-            output.append(scoresList.get(i).name()).append(" ").append(scoresList.get(i).valueOfScore()).append("\n");
+            output.append(scoresList.get(i).getName()).append(" ").append(scoresList.get(i).getValueOfScore()).append("\n");
         }
         return output.toString();
     }
-
-    /**
-     * Creates record with player's names and scores
-     */
-    record ScoreRecord(String name, Integer valueOfScore) implements Comparable<ScoreRecord> {
-        @Override
-        public int compareTo(ScoreRecord r) {
-            return r.valueOfScore().compareTo(this.valueOfScore());
-        }
-    }
 }
 
+/**
+ * Creates record with player's names and scores
+ */
+class ScoreRecord implements Comparable<ScoreRecord> {
+    String name;
+    Integer valueOfScore;
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getValueOfScore() {
+        return valueOfScore;
+    }
+
+    ScoreRecord(String name, Integer valueOfScore) {
+        this.name = name;
+        this.valueOfScore = valueOfScore;
+    }
+
+    @Override
+    public int compareTo(ScoreRecord r) {
+        return r.getValueOfScore().compareTo(this.getValueOfScore());
+    }
+}
 
 class SavedScoreIOUtility {
     /**
@@ -74,12 +89,14 @@ class SavedScoreIOUtility {
      * @param name path to file
      * @return list of (strings) entries
      */
-    public static List<SavedScore.ScoreRecord> readSavedScore(String name) {
-        var results = new ArrayList<SavedScore.ScoreRecord>();
+    public static List<ScoreRecord> readSavedScore(String name) {
+        var results = new ArrayList<ScoreRecord>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(name))) {
-            results = new Gson().fromJson(reader, new TypeToken<List<SavedScore.ScoreRecord>>() {
-            }.getType());
-            results.sort(Comparator.comparing(SavedScore.ScoreRecord::valueOfScore));
+
+            results.addAll(new Gson().fromJson(reader, new TypeToken<List<ScoreRecord>>() {}.getType()));
+            results.sort(Comparator.comparing(ScoreRecord::getValueOfScore));
+
         } catch (FileNotFoundException e) {
             System.err.println("File doesn't exist!");
         } catch (IOException e) {
@@ -99,11 +116,11 @@ class SavedScoreIOUtility {
         return input.toString();
     }
 
-    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score, String name) {
+    public static boolean writeSavedScoreToFile(String path, List<ScoreRecord> scoreList, int score, String name) {
         try (Writer writer = Files.newBufferedWriter(Paths.get(path))) {
             Gson gson = new Gson();
 
-            scoreList.add(new SavedScore.ScoreRecord(name, score));
+            scoreList.add(new ScoreRecord(name, score));
 
             Collections.sort(scoreList);
             gson.toJson(scoreList, writer);
@@ -115,7 +132,7 @@ class SavedScoreIOUtility {
     }
 
 
-    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score) {
+    public static boolean writeSavedScoreToFile(String path, List<ScoreRecord> scoreList, int score) {
         return writeSavedScoreToFile(path, scoreList, score, generateName());
     }
 
