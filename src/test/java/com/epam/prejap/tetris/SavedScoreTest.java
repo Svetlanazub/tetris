@@ -29,7 +29,7 @@ public class SavedScoreTest {
     public void shouldAddStringToFile() {
         String name = "AAA";
         int score = 25000;
-        savedScore.rewriteSavedScore(score, name);
+        savedScore.writeSavedScore(score);
         savedScore = null;
         savedScore = new SavedScore("resources/test_score_list.json");
         String test = savedScore.toString();
@@ -38,7 +38,7 @@ public class SavedScoreTest {
 
     @Test (groups = {"SavedScoreTests"})
     public void shouldGenerateThreeCharsName() {
-        String testName = savedScore.nameForNewScore();
+        String testName = SavedScoreIOUtility.generateName();
         assertEquals(testName.length(), 3);
     }
 
@@ -52,8 +52,8 @@ public class SavedScoreTest {
 
     @Test (groups = {"SavedScoreTests"})
     public void shouldSortFromMaxScore() {
-        savedScore.rewriteSavedScore(9900, "AAA");
-        savedScore.rewriteSavedScore(10000, "BBB");
+        savedScore.writeSavedScore(9900, "AAA");
+        savedScore.writeSavedScore(10000, "BBB");
         savedScore = null;
         savedScore = new SavedScore("resources/test_score_list.json");
         String test = savedScore.toString();

@@ -22,6 +22,7 @@ class SavedScore {
     // should not be final, you should be able to update it!
     // but if you are not going to update it at all, keep it final
     private final List<ScoreRecord> scoresList;
+
     SavedScore(String filePath) {
         path = filePath;
         scoresList = SavedScoreIOUtility.readSavedScore(filePath);
@@ -34,6 +35,10 @@ class SavedScore {
      */
     void writeSavedScore(int currentPoints) {
         SavedScoreIOUtility.writeSavedScoreToFile(path, scoresList, currentPoints);
+    }
+
+    void writeSavedScore(int currentPoints, String name) {
+        SavedScoreIOUtility.writeSavedScoreToFile(path, scoresList, currentPoints, name);
     }
 
     /**
@@ -94,11 +99,11 @@ class SavedScoreIOUtility {
         return input.toString();
     }
 
-    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score) {
+    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score, String name) {
         try (Writer writer = Files.newBufferedWriter(Paths.get(path))) {
             Gson gson = new Gson();
 
-            scoreList.add(new SavedScore.ScoreRecord(generateName(), score));
+            scoreList.add(new SavedScore.ScoreRecord(name, score));
 
             Collections.sort(scoreList);
             gson.toJson(scoreList, writer);
@@ -107,6 +112,11 @@ class SavedScoreIOUtility {
             return false;
         }
         return true;
+    }
+
+
+    public static boolean writeSavedScoreToFile(String path, List<SavedScore.ScoreRecord> scoreList, int score) {
+        return writeSavedScoreToFile(path, scoreList, score, generateName());
     }
 
 }
