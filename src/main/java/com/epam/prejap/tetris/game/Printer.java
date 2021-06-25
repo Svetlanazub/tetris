@@ -10,24 +10,22 @@ public class Printer {
         this.out = out;
     }
 
-    void draw(byte[][] grid) {
+    void draw(Grid grid) {
         clear();
-        border(grid[0].length);
-        for (byte[] bytes : grid) {
+        border(grid.columnsNumber);
+        for (Grid.Row line : grid.getLines()) {
             startRow();
-            for (byte aByte : bytes) {
-                print(aByte);
-            }
+            line.getRow().forEach(this::print);
             endRow();
         }
-        border(grid[0].length);
+        border(grid.columnsNumber);
     }
 
     void clear() {
         out.print("\u001b[2J\u001b[H");
     }
 
-    void print(byte dot) {
+    void print(int dot) {
         out.format(dot == 0 ? " " :"#");
     }
 

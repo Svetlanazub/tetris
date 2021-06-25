@@ -39,7 +39,7 @@ class Tetris {
                     moved = true;
                 }
             } while (nextMove);
-
+            playfield.findAndRemoveFilledLines();
         } while (moved);
 
         if (player instanceof HumanPlayer)

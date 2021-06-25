@@ -6,7 +6,7 @@ import com.epam.prejap.tetris.block.BlockFeed;
 
 public class Playfield {
 
-    private final byte[][] grid;
+    private final Grid grid;
     private final int rows;
     private final int cols;
     private final Printer printer;
@@ -21,7 +21,7 @@ public class Playfield {
         this.cols = cols;
         this.feed = feed;
         this.printer = printer;
-        grid = new byte[this.rows][this.cols];
+        grid = new Grid(this.rows, this.cols);
     }
 
     public void nextBlock() {
@@ -45,6 +45,14 @@ public class Playfield {
     }
 
     /**
+     * Searches and removes the complete lines from a grid if such was found.
+     * Lines that are above it, will be moved down on such number of rows however many filled lines were found.
+     */
+    public void findAndRemoveFilledLines() {
+        if (grid.hasFilledLines()) grid.removeFilledLine();
+    }
+
+    /**
      * Move immediately to bottom
      * @see Playfield#isValidMove(Block, int, int)
      */
@@ -56,19 +64,37 @@ public class Playfield {
         return move(i - 1, 0);
     }
 
-
+    /**
+     * Moves a current block right by 1 column.
+     */
     private void moveRight() {
         move(0, 1);
     }
 
+    /**
+     * Moves a current block left by 1 column.
+     */
     private void moveLeft() {
         move(0, -1);
     }
 
+    /**
+     * Moves a current block down by 1 line.
+     *
+     * @return true if such move was made
+     */
     private boolean moveDown() {
         return move(1, 0);
     }
 
+    /**
+     * Moves block with specified offset of rows and columns.
+     * In case such move is not valid - leaves it without change and returns false.
+     *
+     * @param rowOffset row offset
+     * @param colOffset column offset
+     * @return true if move was made
+     */
     private boolean move(int rowOffset, int colOffset) {
         boolean moved = false;
         if (isValidMove(block, rowOffset, colOffset)) {
@@ -78,6 +104,14 @@ public class Playfield {
         return moved;
     }
 
+    /**
+     * Checks if move is valid.
+     *
+     * @param block the block whose move on playfield is to be tested
+     * @param rowOffset row offset
+     * @param colOffset column offset
+     * @return true if move is valid
+     */
     private boolean isValidMove(Block block, int rowOffset, int colOffset) {
         for (int i = 0; i < block.rows(); i++) {
             for (int j = 0; j < block.cols(); j++) {
@@ -85,7 +119,7 @@ public class Playfield {
                 if (dot > 0) {
                     int newRow = row + i + rowOffset;
                     int newCol = col + j + colOffset;
-                    if (newRow >= rows || newCol >= cols || grid[newRow][newCol] > 0) {
+                    if (newRow >= rows || newCol >= cols || grid.checkDotPresenceAtPosition(newRow, newCol)) {
                         return false;
                     }
                 }
@@ -94,15 +128,27 @@ public class Playfield {
         return true;
     }
 
+    /**
+     * Hides a current block.
+     */
     private void hide() {
-        forEachBrick((i, j, dot) -> grid[row + i][col + j] = 0);
+        forEachBrick((i, j, dot) -> grid.replaceValue(row + i, col + j, 0));
     }
 
+    /**
+     * Shows block and draws grid.
+     */
     private void show() {
-        forEachBrick((i, j, dot) -> grid[row + i][col + j] = dot);
+        forEachBrick((i, j, dot) -> grid.replaceValue(row + i, col + j, dot));
         printer.draw(grid);
     }
 
+    /**
+     * Implements block's shift with specified offset of rows and columns.
+     *
+     * @param rowOffset row offset
+     * @param colOffset column offset
+     */
     private void doMove(int rowOffset, int colOffset) {
         row += rowOffset;
         col += colOffset;
@@ -120,7 +166,7 @@ public class Playfield {
     }
 
     private interface BrickAction {
-        void act(int i, int j, byte dot);
+        void act(int i, int j, int dot);
     }
 
 }
