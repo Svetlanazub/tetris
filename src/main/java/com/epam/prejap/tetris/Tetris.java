@@ -5,11 +5,12 @@ import com.epam.prejap.tetris.game.Move;
 import com.epam.prejap.tetris.game.Playfield;
 import com.epam.prejap.tetris.game.Printer;
 import com.epam.prejap.tetris.game.Waiter;
+import com.epam.prejap.tetris.player.HumanPlayer;
 import com.epam.prejap.tetris.player.Player;
 import com.epam.prejap.tetris.player.RandomPlayer;
 
-class Tetris {
 
+class Tetris {
     private final Playfield playfield;
     private final Waiter waiter;
     private final Player player;
@@ -34,9 +35,15 @@ class Tetris {
                 waiter.waitForIt();
                 Move move = player.nextMove().orElse(Move.NONE);
                 moved |= (nextMove = playfield.move(move));
+                if (move == Move.TO_BOTTOM_NOW) {
+                    moved = true;
+                }
             } while (nextMove);
 
         } while (moved);
+
+        if (player instanceof HumanPlayer)
+            ((HumanPlayer) player).killHumanPlayer();
 
         return new Score(score);
     }
@@ -46,14 +53,24 @@ class Tetris {
         int cols = 20;
         int delay = 500;
 
+        Player player = new RandomPlayer();
+        if (args.length > 0 && args[0].contains("human"))
+            player = new HumanPlayer();
+
         var feed = new BlockFeed();
         var printer = new Printer(System.out);
         var playfield = new Playfield(rows, cols, feed, printer);
-        var game = new Tetris(playfield, new Waiter(delay), new RandomPlayer());
+        var game = new Tetris(playfield, new Waiter(delay), player);
 
+        /* todo: try to save score = game.play() to SavedScore class first, insert it to
+         * score list, then call utility class to save it to file. In this way feature would be a way more
+         * easier to test
+         */
         var score = game.play();
-
+        SavedScore savedScore = new SavedScore("score_list.json");
+        System.out.println(savedScore);
         System.out.println("Score: " + score.points());
-    }
 
+        savedScore.writeSavedScore(score.points());
+    }
 }
